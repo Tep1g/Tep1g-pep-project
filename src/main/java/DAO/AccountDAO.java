@@ -18,12 +18,11 @@ public class AccountDAO {
             ps.setString(2, password);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                Account userAccount = new Account();
-                userAccount.setAccount_id(rs.getInt("account_id"));
-                userAccount.setUsername(rs.getString("username"));
-                userAccount.setPassword(rs.getString("password"));
-                
-                return userAccount;
+                return new Account(
+                    rs.getInt("account_id"),
+                    rs.getString("username"),
+                    rs.getString("password")
+                );
             }
         }
         catch(SQLException e) {
