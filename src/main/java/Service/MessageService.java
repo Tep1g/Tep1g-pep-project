@@ -32,8 +32,10 @@ public class MessageService {
     }
 
     public Message updateMessageById(int messageId, String messageString) {
-        if (messageDAO.updateMessageById(messageId, messageString)) {
-            return messageDAO.getMessageById(messageId);
+        if (!messageString.isBlank()) {
+            if (messageDAO.updateMessageById(messageId, messageString)) {
+                return messageDAO.getMessageById(messageId);
+        }
         }
         return null;
     }
