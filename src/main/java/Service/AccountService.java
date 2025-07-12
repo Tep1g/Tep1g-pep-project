@@ -15,7 +15,7 @@ public class AccountService {
     }
 
     public boolean register(Account account) {
-        if ((account.getUsername().length() >= 4) && (!accountDAO.checkAccountExists(account)) ) {
+        if ((account.getPassword().length() >= 4) && (!account.getUsername().isBlank()) && (!accountDAO.checkAccountExists(account)) ) {
             return accountDAO.insertAccount(account);
         }
         return false;
