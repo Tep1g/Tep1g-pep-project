@@ -137,4 +137,19 @@ public class MessageDAO {
         }
         return false;
     }
+
+    public boolean checkPosterExists(Message message) {
+        Connection connection = ConnectionUtil.getConnection();
+        try {
+            String sql = "SELECT * FROM account WHERE account_id=?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, message.posted_by);
+            ResultSet rs = ps.executeQuery();
+            return rs.next();
+        }
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return false;
+    }
 }
