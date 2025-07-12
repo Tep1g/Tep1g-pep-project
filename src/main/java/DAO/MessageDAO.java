@@ -44,14 +44,14 @@ public class MessageDAO {
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, messageId);
             ResultSet rs = ps.executeQuery();
+            Message message = new Message();
             if (rs.next()) {
-                return new Message(
-                    rs.getInt("message_id"),
-                    rs.getInt("posted_by"),
-                    rs.getString("message_text"),
-                    rs.getLong("time_posted_epoch")
-                );
+                message.setMessage_id(rs.getInt("message_id"));
+                message.setPosted_by(rs.getInt("posted_by"));
+                message.setMessage_text(rs.getString("message_text"));
+                message.setTime_posted_epoch(rs.getLong("time_posted_epoch"));
             }
+            return message;
         }
         catch(SQLException e) {
             System.out.println(e.getMessage());
