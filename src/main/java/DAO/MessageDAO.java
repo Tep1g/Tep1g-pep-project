@@ -13,9 +13,9 @@ import Util.ConnectionUtil;
 
 public class MessageDAO {
     public List<Message> getAllMessages() {
-        List<Message> messages = new ArrayList<>();
         Connection connection = ConnectionUtil.getConnection();
         try {
+            List<Message> messages = new ArrayList<>();
             String sql = "SELECT * FROM message";
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(sql);
@@ -37,7 +37,7 @@ public class MessageDAO {
         return null;
     }
 
-    public Message getMessageByMessageId(int messageId) {
+    public Message getMessageById(int messageId) {
         Connection connection = ConnectionUtil.getConnection();
         try {
             String sql = "SELECT * FROM message WHERE message_id=?";
@@ -59,7 +59,7 @@ public class MessageDAO {
         return null;
     }
     
-    public boolean deleteMessageByMessageId(int messageId) {
+    public boolean deleteMessageById(int messageId) {
         Connection connection = ConnectionUtil.getConnection();
         try {
             String sql = "DELETE FROM message WHERE message_id=?";
@@ -73,27 +73,25 @@ public class MessageDAO {
         return false;
     }
 
-    public Message updateMessageByMessageId(int messageId, String messageText) {
+    public boolean updateMessageById(int messageId, String messageText) {
         Connection connection = ConnectionUtil.getConnection();
         try {
             String sql = "UPDATE message SET message_text=? WHERE message_id=?";
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, messageText);
             ps.setInt(2, messageId);
-            if (ps.executeUpdate() == 1) {
-                return getMessageByMessageId(messageId);
-            }
+            return (ps.executeUpdate() == 1);
         }
         catch(SQLException e) {
             System.out.println(e.getMessage());
         }
-        return null;
+        return false;
     }
 
     public List<Message> getMessagesByAccountId(int accountId) {
-        List<Message> messages = new ArrayList<>();
         Connection connection = ConnectionUtil.getConnection();
         try {
+            List<Message> messages = new ArrayList<>();
             String sql = "SELECT * FROM message WHERE posted_by=?";
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, accountId);
