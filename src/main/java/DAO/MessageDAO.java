@@ -115,7 +115,7 @@ public class MessageDAO {
         return null;
     }
 
-    public boolean createMessage(Message message) {
+    public boolean insertMessage(Message message) {
         Connection connection = ConnectionUtil.getConnection();
         try {
             String sql = "INSERT INTO message (posted_by, message_text, time_posted_epoch) VALUES (?, ?, ?)";
